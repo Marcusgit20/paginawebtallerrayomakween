@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<br>
+  <section id="faq" class="faq section-bg">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Pagina principal de Administrador</h2>
+        <p>Bienvenido,acá podrás hacer lo siguiente</p>
+      </div>
+
+      <div class="faq-list">
+        <ul>
+          <li data-aos="fade-up">
+            <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">Registar un mecanico<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+              <form id="formAddProf" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+        
+                {{form | crispy}}
+        
+                <button type="submit" class="btn btn-success">Agregar</button>
+                <button type="reset" class="btn btn-primary">Limpiar</button>
+            </form>
+            {{mensaje}}
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="100">
+            <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Listar mecanicos registrados<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rut</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cargo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in mecanicos %}
+                    <tr>
+                        <th scope="row">{{p.rut}}</th>
+                        <td>{{p.nombre}}</td>
+                        <td>{{p.apellido}}</td>
+                        <td>
+                            {{ p.cargo }}
+                        </td>
+                        <td>
+                            <a href="{% url 'modificar_mecanico' p.rut %}" class="btn btn-info btn-sm">Modificar</a>
+                            <a href="{% url 'eliminar_mecanico' p.rut %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="200">
+            <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">Ver trabajos pendientes de aprobación<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+              <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">N° Trabajo</th>
+                      <th scope="col">Trabajo</th>
+                      <th scope="col">Rut Mecanico</th>
+                      <th scope="col">Fecha Trabajo</th>
+                      <th scope="col">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for p in trabajos %}
+                    <tr>
+                        <th scope="row">{{p.id_trabajo}}</th>
+                        <td>{{p.nombre_trabajo}}</td>
+                        <td>{{p.rut_mecanico}}</td>
+                        <td>{{p.fecha_trabajo}}</td>
+                        <td>{{p.estado}}</td>
+                        <td>
+                            <a href="{% url 'modificar_mecanico' p.rut %}" class="btn btn-info btn-sm">Revisar Trabajo</a>
+                            <a href="{% url 'eliminar_mecanico' p.rut %}" class="btn btn-danger btn-sm">Rechazar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="300">
+            <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Ver postulaciones<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+              <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Rut Postulante</th>
+                      <th scope="col">Nombres</th>
+                      <th scope="col">Apellidos</th>
+                      <th scope="col">N° Telefono</th>
+                      <th scope="col">Correo</th>
+                      <th scope="col">Experiencia</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for p in postulacion %}
+                    <tr>
+                        <th scope="row">{{p.rut_postulante}}</th>
+                        <td>{{p.nombres}}</td>
+                        <td>{{p.apellidos}}</td>
+                        <td>{{p.numero_telefono}}</td>
+                        <td>{{p.correo}}</td>
+                        <td>{{p.experiencia}}</td>
+                        <td><a href="{% url 'eliminar_postulacion' p.rut_postulante %}" class="btn btn-danger btn-sm">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+  
+<script>
+ $(document).ready(function() {
+    $("#nombres").val("");
+    $("#apellidos").val("");
+    $("#usuario").val("");
+    $("#ciudad").val("");
+    $("#estcivil").val("noselect");
+    estcivil = "";
+    $("#contrasena").val("");
+  $('#btnagr').click(function(event) {
+    // Evita que el formulario se envíe automáticamente
+    event.preventDefault();
+    if( $('#checkconfirm').is(':checked') ) {
+
+      var nombres = $("#nombres").val();
+      var apellidos = $("#apellidos").val();
+      var usuario = $("#usuario").val();
+      var ciudad = $("#ciudad").val();
+      var selestado = $("#estcivil option:selected").val();
+      var estcivil = "";
+      var contrasena = $("#contrasena").val();
+      
+      if (nombres == ""){
+      alert("Ingrese nombres");
+      return false;
+    }
+    if (apellidos == ""){
+      alert("Ingrese apellidos");
+      return false;
+    }
+    if (usuario == ""){
+      alert("Ingrese usuario");
+      return false;
+    }
+    if (ciudad == ""){
+      alert("Ingrese ciudad");
+      return false;
+    }
+    if (selestado == 'soltero'){
+      estcivil = "soltero";
+    }else if (selestado == 'casado'){
+      estcivil = "casado";
+    }else{
+      alert("Seleccione un estado civil");
+    return false;
+    }
+    if (contrasena == ""){
+      alert("Ingrese una contraseña");
+      return false;
+    }
+
+    alert("Se registro un nuevo mecanico");
+    
+    $("#nombres").val("");
+    $("#apellidos").val("");
+    $("#usuario").val("");
+    $("#ciudad").val("");
+    $("#estcivil").val("noselect");
+    estcivil = "";
+    $("#contrasena").val("");
+  }else{
+    alert("Asegurese y marque la casilla");
+  }
+  });
+});
+
+</script>
+
+{% endblock %}

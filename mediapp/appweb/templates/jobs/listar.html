@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h3>Listar los mecanicos</h3>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Rut</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>¿Es mecanico?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in trabajos %}
+            <tr>
+                <th scope="row">{{p.id_trabajo}}</th>
+                <td>{{p.nombre_trabajo}}</td>
+                <td>{{p.apellido}}</td>
+                <td>
+                    {{ p.estado }}
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

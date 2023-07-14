@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="mecanico" class="row">
+    <div class="cont-mecanicos col-1g-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 9%; text-align: center;">
+        <h1>Equipo de Mecanicos</h1>
+        <h4>Gracias a este talentoso equipo de mecanicos funcionamos a diario</h4>
+        <div class="cont-listado row">
+
+            {% for p in mecanicos %}
+                <div class="col-1g-3 col-md-3 col-sm-6 col-x5-12" style="margin-top: 2%;">
+                    <div class="prof int">
+                        <figure>
+                            <a href="#">
+                            {% if p.foto %}
+                                <img width="270" height="350" src="{{p.foto.url}}"
+                                class="img-responsive wp-post-image" alt="" decoding="async" loading="lazy"> </a>
+                            {% else %}
+                                <img width="270" height="350" src=""
+                                class="img-responsive wp-post-image" alt="" decoding="async" loading="lazy"> </a>
+                            {% endif %}
+                            <h4 class="nombre white"> {{p.rut}}</h4>
+                            <span class="cargo">{{p.nombre}} {{p.apellido}}</span>
+                        </figure>
+                        <div class="details">
+                            <p class="extracto">{{p.cargo}}</p>
+                            <p class="rrss"></p>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<section id="faq" class="faq section-bg">
+  <div class="container" data-aos="fade-up">
+<br>
+    <div class="section-title">
+      <h2>Pagina principal de Mecánico</h2>
+      <p>Bienvenido,acá podrás hacer lo siguiente</p>
+    </div>
+
+    <div class="faq-list">
+      <ul>
+        <li data-aos="fade-up">
+          <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">Registar una mantencion<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+            <form action="" method="post" enctype="multipart/form-data">
+
+              {% csrf_token %}
+              
+            {{form | crispy}}
+            <br>
+            <button type="submit" class="btn btn-success">Agregar</button>
+            <button type="reset" class="btn btn-primary">Limpiar</button>
+          </form>
+          </div>
+        </li>
+
+        <li data-aos="fade-up" data-aos-delay="100">
+          <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Listar mantenciones rechazadas por el Administrador<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+            
+          </div>
+        </li>
+
+        <li data-aos="fade-up" data-aos-delay="200">
+          <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">Ver trabajos aun pendientes de aprobación<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+            <div class="table-responsive">
+              
+            </div>
+          </div>
+        </li>
+
+        <li data-aos="fade-up" data-aos-delay="300">
+          <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Opcion 4<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+            
+          </div>
+        </li>
+
+        <li data-aos="fade-up" data-aos-delay="400">
+          <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed">Opcion 5<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
+            
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+    <script>
+      $(document).ready(function(){
+      $("#numcli").val('');
+      $("#nomcli").val('');
+      $("#nommec").val('');
+      $("#marcmod").val('');
+      $("#annpat").val('');
+      $("#tipoman").val('');
+      $("#feccon").val('');
+      $("#montpag").val('');
+    $("#btnagr").click(function(){
+      if( $('#invalidCheck').is(':checked') ) {
+        event.preventDefault();
+        var numcliente = $("#numcli").val();
+        var nomcliente = $("#nomcli").val();
+        var nommecanico = $("#nommec").val();
+        var marcamodelo = $("#marcmod").val();
+        var annopatente = $("#annpat").val();
+        var tipomantencion = $("#tipoman").val();
+        var feccontratacion = $("#feccon").val();
+        var montopago = $("#montpag").val();
+
+      if(numcliente == '') {
+        alert("Ingrese numero de cliente");
+        return false;
+      }
+      if(nomcliente == '') {
+        alert("Ingrese nombre de cliente");
+        return false;
+      }
+      if(nommecanico == '') {
+        alert("Ingrese nombre de mecanico");
+        return false;
+      }
+      if(marcamodelo == '') {
+        alert("Ingrese marca y modelo");
+        return false;
+      }
+      if(annopatente == '') {
+        alert("Ingrese año y patente");
+        return false;
+      }
+      if(tipomantencion == '') {
+        alert("Ingrese tipo de mantencion");
+        return false;
+      }
+      if(feccontratacion == '') {
+        alert("Seleccione fecha de contratacion");
+        return false;
+      }
+      if(montopago == '') {
+        alert("Ingrese monto a pagar");
+        return false;
+      }
+      
+      alert("Se ha registrado la nueva mantencion");
+
+      $("#numcli").val('');
+      $("#nomcli").val('');
+      $("#nommec").val('');
+      $("#marcmod").val('');
+      $("#annpat").val('');
+      $("#tipoman").val('');
+      $("#feccon").val('');
+      $("#montpag").val('');
+
+      }else{
+        alert("Asegurese y marque la casilla");
+      }
+    });
+  });
+    </script>
+
+{% endblock %}
